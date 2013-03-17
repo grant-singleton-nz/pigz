@@ -20,11 +20,13 @@ project "pigz"
 
    configuration "Debug"
        defines { "_DEBUG" }
-       flags { "Symbols" }
+       flags { "Symbols", "StaticRuntime" }
+       targetdir "dbg"
 
    configuration "Release"
        defines { "NDEBUG" }
-       flags { "Optimize", "Symbols" }
+       flags { "Optimize", "Symbols", "StaticRuntime" }
+       targetdir "rel"
 
 project "zlib"
    kind "StaticLib"
@@ -37,3 +39,12 @@ project "zlib"
 
    configuration {"vs*"}
       defines { "_WIN32", "WINDOWS", "_CRT_SECURE_NO_WARNINGS" }
+
+   configuration "Debug"
+       flags { "Symbols", "StaticRuntime" }
+       targetdir "dbg"
+
+   configuration "Release"
+       defines { "NDEBUG" }
+       flags { "Optimize", "Symbols", "StaticRuntime" }
+       targetdir "rel"
