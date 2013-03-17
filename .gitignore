@@ -1,10 +1,8 @@
 ipch/
-obj/
+build/
 *sdf
 *.suo
-pigz.sln
-pigz.vcxproj*
-*pdb
-zlib/zlib.vcxproj*
-zlib/zlib.lib
-
+*.ilk
+*.pdb
+*.lib
+*.exe
