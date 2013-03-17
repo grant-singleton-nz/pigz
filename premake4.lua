@@ -2,6 +2,12 @@ solution "pigz"
    configurations { "Debug", "Release" }
    location "build"
 
+   configuration "Debug"
+       targetdir "dbg"
+
+   configuration "Release"
+       targetdir "rel"
+
 project "pigz"
    targetname "pigz"
    kind "ConsoleApp"
@@ -21,12 +27,10 @@ project "pigz"
    configuration "Debug"
        defines { "_DEBUG" }
        flags { "Symbols", "StaticRuntime" }
-       targetdir "dbg"
 
    configuration "Release"
        defines { "NDEBUG" }
        flags { "Optimize", "Symbols", "StaticRuntime" }
-       targetdir "rel"
 
 project "zlib"
    kind "StaticLib"
@@ -42,9 +46,7 @@ project "zlib"
 
    configuration "Debug"
        flags { "Symbols", "StaticRuntime" }
-       targetdir "dbg"
 
    configuration "Release"
        defines { "NDEBUG" }
        flags { "Optimize", "Symbols", "StaticRuntime" }
-       targetdir "rel"
