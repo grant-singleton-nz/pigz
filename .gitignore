@@ -4,3 +4,5 @@ obj/
 *.suo
 pigz.sln
 pigz.vcxproj*
+*pdb
+

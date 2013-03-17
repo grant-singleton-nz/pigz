@@ -305,15 +305,19 @@
 #include <time.h>       /* ctime(), time(), time_t, mktime() */
 #include <signal.h>     /* signal(), SIGINT */
 #include <sys/types.h>  /* ssize_t */
+#ifdef WIN32
+#include "win_compat.h"
+#else
 #include <sys/stat.h>   /* chmod(), stat(), fstat(), lstat(), struct stat, */
                         /* S_IFDIR, S_IFLNK, S_IFMT, S_IFREG */
 #include <sys/time.h>   /* utimes(), gettimeofday(), struct timeval */
 #include <unistd.h>     /* unlink(), _exit(), read(), write(), close(), */
                         /* lseek(), isatty(), chown() */
-#include <fcntl.h>      /* open(), O_CREAT, O_EXCL, O_RDONLY, O_TRUNC, */
-                        /* O_WRONLY */
 #include <dirent.h>     /* opendir(), readdir(), closedir(), DIR, */
                         /* struct dirent */
+#endif
+#include <fcntl.h>      /* open(), O_CREAT, O_EXCL, O_RDONLY, O_TRUNC, */
+                        /* O_WRONLY */
 #include <limits.h>     /* PATH_MAX, UINT_MAX */
 #if __STDC_VERSION__-0 >= 199901L || __GNUC__-0 >= 3
 #  include <inttypes.h> /* intmax_t */
@@ -3035,6 +3039,12 @@ local char *justname(char *path)
    no errors are reported.  The mode bits, including suid, sgid, and the sticky
    bit are copied (if allowed), the owner's user id and group id are copied
    (again if allowed), and the access and modify times are copied. */
+#ifdef WIN32
+local void copymeta(char *from, char *to)
+{
+    // TODO: write me
+}
+#else
 local void copymeta(char *from, char *to)
 {
     struct stat st;
@@ -3057,8 +3067,15 @@ local void copymeta(char *from, char *to)
     times[1].tv_usec = 0;
     (void)utimes(to, times);
 }
+#endif
 
 /* set the access and modify times of fd to t */
+#ifdef WIN32
+local void touch(char *path, time_t t)
+{
+    // TODO: write me
+}
+#else
 local void touch(char *path, time_t t)
 {
     struct timeval times[2];
@@ -3069,6 +3086,7 @@ local void touch(char *path, time_t t)
     times[1].tv_usec = 0;
     (void)utimes(path, times);
 }
+#endif
 
 /* process provided input file, or stdin if path is NULL -- process() can
    call itself for recursive directory processing */
@@ -3101,7 +3119,7 @@ local void process(char *path)
 
         /* try to stat input file -- if not there and decoding, look for that
            name with compressed suffixes */
-        if (lstat(g.inf, &st)) {
+            if (lstat(g.inf, &st)) {
             if (errno == ENOENT && (g.list || g.decode)) {
                 char **try = sufs;
                 do {
