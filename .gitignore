@@ -1,0 +1,6 @@
+ipch/
+obj/
+*sdf
+*.suo
+pigz.sln
+pigz.vcxproj*
