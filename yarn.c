@@ -20,9 +20,11 @@
  */
 
 /* for thread portability */
+#define _THREAD_SAFE
+#ifndef WIN32
 #define _XOPEN_SOURCE 700
 #define _POSIX_C_SOURCE 200809L
-#define _THREAD_SAFE
+#endif
 
 /* use large file functions if available */
 #define _FILE_OFFSET_BITS 64

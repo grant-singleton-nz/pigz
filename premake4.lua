@@ -20,12 +20,12 @@ project "pigz"
    language "C"
    files { "*.h", "*.c", "zopfli/*.h", "zopfli/*.c" }
    excludes { "zopfli/zopfli.c" }
-   includedirs {"zlib"}
-   links { "zlib" }
+   includedirs { "zlib", "../pthread-win32" }
+   links {  "zlib", "winpthreads" }
 
    configuration {"vs*"}
-      defines { "NOTHREAD" }
-      excludes { "yarn.c" }
+      -- defines { "NOTHREAD" }
+      -- excludes { "yarn.c" }
       buildoptions {"/wd4996", "/wd4244", "/wd4305" }
       linkoptions {"/NODEFAULTLIB:\"msvcrt.lib\""}
 
@@ -39,3 +39,11 @@ project "zlib"
    excludes { "zlib/gzclose.c", "zlib/gzread.c", "zlib/gzwrite.c", "zlib/gzlib.c"}
    includedirs { "zlib" }
 
+project "winpthreads"
+   kind "StaticLib"
+   language "C"
+   files {
+      "../pthread-win32/*.h",
+      "../pthread-win32/pthread.c"
+   }
+   includedirs { "../pthread-win32" }
