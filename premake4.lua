@@ -18,14 +18,12 @@ solution "pigz"
 project "pigz"
    kind "ConsoleApp"
    language "C"
-   files { "*.h", "*.c", "zopfli/*.h", "zopfli/*.c" }
+   files { "*.h", "*.c", "zopfli/*.h", "zopfli/*.c", "win32/*"}
    excludes { "zopfli/zopfli.c" }
-   includedirs { "zlib", "../pthread-win32" }
-   links {  "zlib", "winpthreads" }
+   includedirs { "win32", "zlib", "pthread-win32" }
+   links {  "zlib", "pthread-win32" }
 
    configuration {"vs*"}
-      -- defines { "NOTHREAD" }
-      -- excludes { "yarn.c" }
       buildoptions {"/wd4996", "/wd4244", "/wd4305" }
       linkoptions {"/NODEFAULTLIB:\"msvcrt.lib\""}
 
@@ -39,11 +37,11 @@ project "zlib"
    excludes { "zlib/gzclose.c", "zlib/gzread.c", "zlib/gzwrite.c", "zlib/gzlib.c"}
    includedirs { "zlib" }
 
-project "winpthreads"
+project "pthread-win32"
    kind "StaticLib"
    language "C"
    files {
-      "../pthread-win32/*.h",
-      "../pthread-win32/pthread.c"
+      "pthread-win32/*.h",
+      "pthread-win32/pthread.c"
    }
-   includedirs { "../pthread-win32" }
+   includedirs { "pthread-win32" }

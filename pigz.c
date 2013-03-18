@@ -306,16 +306,16 @@
 #include <signal.h>     /* signal(), SIGINT */
 #include <sys/types.h>  /* ssize_t */
 #ifdef WIN32
-#include "win_compat.h"
+#include "compat.h"
 #else
 #include <sys/stat.h>   /* chmod(), stat(), fstat(), lstat(), struct stat, */
                         /* S_IFDIR, S_IFLNK, S_IFMT, S_IFREG */
 #include <sys/time.h>   /* utimes(), gettimeofday(), struct timeval */
 #include <unistd.h>     /* unlink(), _exit(), read(), write(), close(), */
                         /* lseek(), isatty(), chown() */
+#endif
 #include <dirent.h>     /* opendir(), readdir(), closedir(), DIR, */
                         /* struct dirent */
-#endif
 #include <fcntl.h>      /* open(), O_CREAT, O_EXCL, O_RDONLY, O_TRUNC, */
                         /* O_WRONLY */
 #include <limits.h>     /* PATH_MAX, UINT_MAX */

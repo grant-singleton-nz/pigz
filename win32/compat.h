@@ -14,6 +14,4 @@ typedef int ssize_t;
 
 #define S_IFLNK 0x0000
 
-#include "win_dirent.h"
-
 #endif
