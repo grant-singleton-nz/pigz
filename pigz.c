@@ -306,7 +306,7 @@
 #include <signal.h>     /* signal(), SIGINT */
 #include <sys/types.h>  /* ssize_t */
 #ifdef WIN32
-#include "compat.h"
+#include "wincompat.h"
 #else
 #include <sys/stat.h>   /* chmod(), stat(), fstat(), lstat(), struct stat, */
                         /* S_IFDIR, S_IFLNK, S_IFMT, S_IFREG */

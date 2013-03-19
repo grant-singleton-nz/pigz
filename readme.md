@@ -1,5 +1,7 @@
 This is a fork of [pigz](http://zlib.net/pigz/) that adds Windows
-support, made by [Krzysztof Kowalczyk](http://blog.kowalczyk.info).
+support, courtesy of [Krzysztof Kowalczyk](http://blog.kowalczyk.info).
+
+To download binaries: http://blog.kowalczyk.info/software/pigz-for-windows.html
 
 To build:
  - get [premake](http://industriousone.com/premake). I use premake 4.4
