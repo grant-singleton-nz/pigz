@@ -3719,7 +3719,17 @@ int main(int argc, char **argv)
     g.hname = NULL;
 
     /* save pointer to program name for error messages */
+#ifdef WIN32
+    p = strrchr(argv[0], '\\');
+    // get rid of .exe extension
+    {
+        char *p2 = strrchr(p, '.');
+        if (p2)
+            *p2 = 0;
+    }
+#else
     p = strrchr(argv[0], '/');
+#endif
     p = p == NULL ? argv[0] : p + 1;
     g.prog = *p ? p : "pigz";
 

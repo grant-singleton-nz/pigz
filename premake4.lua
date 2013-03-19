@@ -30,6 +30,22 @@ project "pigz"
    configuration "Debug"
        defines { "_DEBUG" }
 
+-- yes, this is the same as pigz, just with a different name
+project "unpigz"
+   kind "ConsoleApp"
+   language "C"
+   files { "*.h", "*.c", "zopfli/*.h", "zopfli/*.c", "win32/*"}
+   excludes { "zopfli/zopfli.c" }
+   includedirs { "win32", "zlib", "pthread-win32" }
+   links {  "zlib", "pthread-win32" }
+
+   configuration {"vs*"}
+      buildoptions {"/wd4996", "/wd4244", "/wd4305" }
+      linkoptions {"/NODEFAULTLIB:\"msvcrt.lib\""}
+
+   configuration "Debug"
+       defines { "_DEBUG" }
+
 project "zlib"
    kind "StaticLib"
    language "C"
