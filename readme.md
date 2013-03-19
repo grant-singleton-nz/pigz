@@ -6,6 +6,13 @@ To download binaries: http://blog.kowalczyk.info/software/pigz-for-windows.html
 To build:
  - get [premake](http://industriousone.com/premake). I use premake 4.4
 
+You can run scripts/build.bat (python required), which will auto-detect installed
+Visual Studio 2010 or 2012, build and run tests.
+
+The result (pigz.exe and unpigz.exe) will be in rel directory.
+
+Alternatively, do it manually:
+
 For Visual Studio 2008:
  - run `premake4 vs2008` to generate Visual Studio 2008 solution
  - open `build\pigz.sln` in Visual Studio and build
@@ -32,7 +39,7 @@ top of `pthread.h`:
 
 I used `dirent.[c|h]` from http://www.two-sdg.demon.co.uk/curbralan/code/dirent/dirent.html.
 
-I wrote a simple win32/compat.h that aliases names of some Unix functions to their win32
-equivalents.
+I wrote a simple win32/wincompat.h that aliases names of some Unix functions to
+their win32 equivalents.
 
 I used [premake](http://industriousone.com/premake) for the build system.
