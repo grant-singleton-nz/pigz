@@ -3,13 +3,19 @@ support, courtesy of [Krzysztof Kowalczyk](http://blog.kowalczyk.info).
 
 To download binaries: http://blog.kowalczyk.info/software/pigz-for-windows.html
 
-To build:
- - get [premake](http://industriousone.com/premake). I use premake 4.4
+## How to build
 
-You can run `scripts\build.bat` (python required), which will auto-detect installed
+First, get [premake](http://industriousone.com/premake) and put somewhere in
+the `%PATH%`. I use premake 4.3
+
+### Building via script
+
+You can run `scripts\build.bat` (python required), which will auto-detect
 Visual Studio 2010 or 2012, build and run tests.
 
 The result (`pigz.exe` and `unpigz.exe`) will be in `rel` directory.
+
+### Building manually
 
 Alternatively, do it manually:
 
