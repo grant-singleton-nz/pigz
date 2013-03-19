@@ -1,6 +1,6 @@
 """
 Build pigz and run tests.
-Requirers premake to be installed in %PATH% (http://industriousone.com/premake)
+Requires premake (http://industriousone.com/premake) to be present in %PATH%.
 The final binary will be in rel/pigz.exe and rel/unpigz.exe.
 """
 import os, shutil, util
@@ -68,6 +68,8 @@ def test():
 	test_one_with_flag2(sha1_orig, ".gz", "-11", "-f")
 	# TODO: more tests for stdin/stdout
 	# TODO: compare with gzip/compress (if available in path)
+	cd_to_pigz()
+	rm_dirs(["pigz_test_tmp"])
 
 def main():
 	# just to be sure, only support window's python (i.e. not cygwin's)
