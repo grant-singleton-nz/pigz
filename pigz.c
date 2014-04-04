@@ -3951,7 +3951,13 @@ int main(int argc, char **argv)
 
     /* save pointer to program name for error messages */
 #ifdef WIN32
+    // at this point we might have:
+    // c:\path\pigz.exe, c:/path/pigz.exe, pigz.exe, pigz
     p = strrchr(argv[0], '\\');
+    if (!p)
+        p = strrchr(argv[0], '/');
+    if (!p)
+        p = argv[0];
     // get rid of .exe extension
     {
         char *p2 = strrchr(p, '.');
