@@ -35,7 +35,7 @@ project "unpigz"
    kind "ConsoleApp"
    language "C"
    files { "*.h", "*.c", "zopfli/*.h", "zopfli/*.c", "win32/*"}
-   excludes { "zopfli/zopfli.c" }
+   excludes { "zopfli/zopfli_bin.c" }
    includedirs { "win32", "zlib", "pthread-win32" }
    links {  "zlib", "pthread-win32" }
 
