@@ -8,9 +8,9 @@
 
 typedef int ssize_t;
 
-#define stat _stat
-#define fstat _fstat
-#define lstat _stat
+#define stat _stati64
+#define fstat _fstati64
+#define lstat _stati64
 
 #define S_IFLNK 0x0000
 
