@@ -30,6 +30,13 @@
  *      59 Temple Place - Suite 330, Boston, MA 02111-1307, USA
  */
 
+/*
+ * Fix build for VS2017 (possibly VS2015 as well?)
+ * See https://stackoverflow.com/questions/33557506/timespec-redefinition-error
+ */
+#define HAVE_STRUCT_TIMESPEC
+
+
 #if !defined( PTHREAD_H )
 #define PTHREAD_H
 
