@@ -1,8 +1,15 @@
+/pigz
+/unpigz
+/pigzj
+/pigzt
+/pigzn
 ipch/
 build/
+rel/
 *sdf
 *.suo
 *.ilk
 *.pdb
 *.lib
 *.exe
+*.o

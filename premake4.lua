@@ -18,7 +18,7 @@ solution "pigz"
 project "pigz"
    kind "ConsoleApp"
    language "C"
-   files { "*.h", "*.c", "zopfli/*.h", "zopfli/*.c", "win32/*"}
+   files { "*.h", "*.c", "zopfli/src/zopfli/*.h", "zopfli/src/zopfli/*.c", "win32/*"}
    excludes { "zopfli/zopfli_bin.c" }
    includedirs { "win32", "zlib", "pthread-win32" }
    links {  "zlib", "pthread-win32" }
@@ -34,7 +34,7 @@ project "pigz"
 project "unpigz"
    kind "ConsoleApp"
    language "C"
-   files { "*.h", "*.c", "zopfli/*.h", "zopfli/*.c", "win32/*"}
+   files { "*.h", "*.c", "zopfli/src/zopfli/*.h", "zopfli/src/zopfli/*.c", "win32/*"}
    excludes { "zopfli/zopfli_bin.c" }
    includedirs { "win32", "zlib", "pthread-win32" }
    links {  "zlib", "pthread-win32" }

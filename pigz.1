@@ -1,10 +1,10 @@
-.TH PIGZ 1 local
+.TH PIGZ 1 "January 15, 2022"
 .SH NAME
 pigz, unpigz \- compress or expand files
 .SH SYNOPSIS
 .ll +8
 .B pigz
-.RB [ " \-cdfhikKlLnNqrRtTz0..9,11 " ]
+.RB [ " \-cdfhikKlLmMnNqrRtz0..9,11 " ]
 [
 .B -b
 .I blocksize
@@ -23,7 +23,7 @@ pigz, unpigz \- compress or expand files
 .ll -8
 .br
 .B unpigz
-.RB [ " \-cfhikKlLnNqrRtTz " ]
+.RB [ " \-cfhikKlLmMnNqrRtz " ]
 [
 .B -b
 .I blocksize
@@ -77,7 +77,9 @@ the
 or
 .B --independent
 option, so that the blocks can be decompressed
-independently for partial error recovery or for random access.
+independently for partial error recovery or for random access. This also
+inserts an extra empty block to flag independent blocks by prefacing
+each with the nine-byte sequence (in hex): 00 00 FF FF 00 00 00 FF FF.
 .PP
 Decompression can't be parallelized, at least not without specially prepared
 deflate streams for that purpose.  As a result,
@@ -92,6 +94,12 @@ specifying one process
 or
 .B -tp 1
 ).
+.PP
+All options on the command line are processed before any names are processed.
+If no names are provided on the command line, or if "-" is given as a name (but
+not after "--"), then the input is taken from stdin. If the GZIP or PIGZ
+environment variables are set, then options are taken from their values before
+any command line options are processed, first from GZIP, then from PIGZ.
 .PP
 Compressed files can be restored to their original form using
 .I pigz -d
@@ -116,15 +124,22 @@ indicates the slowest compression method (best compression).
 .B -0
 is no compression.
 .B \-11
-gives a few percent better compression at a severe cost in execution time.
+gives a few percent better compression at a severe cost in execution time,
+using the zopfli algorithm by Jyrki Alakuijala.
 The default is
 .B \-6.
+.TP
+.B -A --alias xxx
+Use xxx as the name for any --zip entry from stdin (the default name is "-").
 .TP
 .B -b --blocksize mmm
 Set compression block size to mmmK (default 128KiB).
 .TP
 .B -c --stdout --to-stdout
 Write all processed output to stdout (won't delete).
+.TP
+.B -C --comment ccc
+Include the provided comment in the gzip header or zip central file header.
 .TP
 .B -d --decompress --uncompress
 Decompress the compressed input.
@@ -134,6 +149,9 @@ Force overwrite, compress .gz, links, and to terminal.
 .TP
 .B -h --help
 Display a help screen and quit.
+.TP
+.B -H --huffman
+Compress using the Huffman-only strategy.
 .TP
 .B -i --independent
 Compress blocks independently for damage recovery.
@@ -152,11 +170,26 @@ Display the
 .I pigz
 license and quit.
 .TP
+.B -m --no-time
+Do not store or restore the modification time. -Nm will store or restore the
+name, but not the modification time. Note that the order of the options is
+important.
+.TP
+.B -M --time
+Store or restore the modification time. -nM will store or restore the
+modification time, but not the name. Note that the order of the options is
+important.
+.TP
 .B -n --no-name
-Do not store or restore file name in/from header.
+Do not store or restore the file name or the modification time. This is the
+default when decompressing. When the file name is not restored from the header,
+the name of the compressed file with the suffix stripped is the name of the
+decompressed file. When the modification time is not restored from the header,
+the modification time of the compressed file is used (not the current time).
 .TP
 .B -N --name
-Store/restore file name and mod time in/from header.
+Store or restore both the file name and the modification time. This is the
+default when compressing.
 .TP
 .B -p --processes n
 Allow up to n processes (default is the number of online processors)
@@ -176,14 +209,14 @@ Use suffix .sss instead of .gz (for compression).
 .B -t --test
 Test the integrity of the compressed input.
 .TP
-.B -T --no-time
-Do not store or restore mod time in/from header.
+.B -U --rle
+Compress using the run length encoding strategy.
 .TP
 .B -v --verbose
 Provide more verbose output.
 .TP
 .B -V --version
-Show the version of pigz.
+Show the version of pigz. -vV also shows the zlib version.
 .TP
 .B -z --zlib
 Compress to zlib (.zz) instead of gzip format.
@@ -199,7 +232,7 @@ Do iterations first, before block split (default is last).
 .B -I, --iterations n
 Number of iterations for optimization (default 15).
 .TP
-.B -M, --maxsplits n
+.B -J, --maxsplits n
 Maximum number of split blocks (default 15).
 .TP
 .B -O  --oneblock
@@ -209,4 +242,4 @@ This software is provided 'as-is', without any express or implied
 warranty.  In no event will the author be held liable for any damages
 arising from the use of this software.
 .PP
-Copyright (C) 2007, 2008, 2009, 2010, 2011, 2012, 2013 Mark Adler <madler@alumni.caltech.edu>
+Copyright (C) 2007-2022 Mark Adler <madler@alumni.caltech.edu>

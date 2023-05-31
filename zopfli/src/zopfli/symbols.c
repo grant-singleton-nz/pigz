@@ -1,5 +1,5 @@
 /*
-Copyright 2011 Google Inc. All Rights Reserved.
+Copyright 2016 Google Inc. All Rights Reserved.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -17,14 +17,20 @@ Author: lode.vandevenne@gmail.com (Lode Vandevenne)
 Author: jyrki.alakuijala@gmail.com (Jyrki Alakuijala)
 */
 
-#include "util.h"
+#include "symbols.h"
 
-#include <assert.h>
-#include <stdio.h>
-#include <stdlib.h>
+/* __has_builtin available in clang */
+#ifdef __has_builtin
+# if __has_builtin(__builtin_clz)
+#   define ZOPFLI_HAS_BUILTIN_CLZ
+# endif
+/* __builtin_clz available beginning with GCC 3.4 */
+#elif __GNUC__ * 100 + __GNUC_MINOR__ >= 304
+# define ZOPFLI_HAS_BUILTIN_CLZ
+#endif
 
 int ZopfliGetDistExtraBits(int dist) {
-#ifdef __GNUC__
+#ifdef ZOPFLI_HAS_BUILTIN_CLZ
   if (dist < 5) return 0;
   return (31 ^ __builtin_clz(dist - 1)) - 1; /* log2(dist - 1) - 1 */
 #else
@@ -46,7 +52,7 @@ int ZopfliGetDistExtraBits(int dist) {
 }
 
 int ZopfliGetDistExtraBitsValue(int dist) {
-#ifdef __GNUC__
+#ifdef ZOPFLI_HAS_BUILTIN_CLZ
   if (dist < 5) {
     return 0;
   } else {
@@ -72,7 +78,7 @@ int ZopfliGetDistExtraBitsValue(int dist) {
 }
 
 int ZopfliGetDistSymbol(int dist) {
-#ifdef __GNUC__
+#ifdef ZOPFLI_HAS_BUILTIN_CLZ
   if (dist < 5) {
     return dist - 1;
   } else {
@@ -160,9 +166,6 @@ int ZopfliGetLengthExtraBitsValue(int l) {
   return table[l];
 }
 
-/*
-Returns symbol in range [257-285] (inclusive).
-*/
 int ZopfliGetLengthSymbol(int l) {
   static const int table[259] = {
     0, 0, 0, 257, 258, 259, 260, 261, 262, 263, 264,
@@ -199,4 +202,20 @@ int ZopfliGetLengthSymbol(int l) {
     284, 284, 284, 284, 284, 284, 284, 285
   };
   return table[l];
+}
+
+int ZopfliGetLengthSymbolExtraBits(int s) {
+  static const int table[29] = {
+    0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2,
+    3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 0
+  };
+  return table[s - 257];
+}
+
+int ZopfliGetDistSymbolExtraBits(int s) {
+  static const int table[30] = {
+    0, 0, 0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8,
+    9, 9, 10, 10, 11, 11, 12, 12, 13, 13
+  };
+  return table[s];
 }
