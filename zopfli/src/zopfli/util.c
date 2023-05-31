@@ -1,5 +1,5 @@
 /*
-Copyright 2013 Google Inc. All Rights Reserved.
+Copyright 2011 Google Inc. All Rights Reserved.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -17,26 +17,19 @@ Author: lode.vandevenne@gmail.com (Lode Vandevenne)
 Author: jyrki.alakuijala@gmail.com (Jyrki Alakuijala)
 */
 
-#ifndef ZOPFLI_ZLIB_H_
-#define ZOPFLI_ZLIB_H_
-
-/*
-Functions to compress according to the Zlib specification.
-*/
+#include "util.h"
 
 #include "zopfli.h"
 
-/*
-Compresses according to the zlib specification and append the compressed
-result to the output.
+#include <assert.h>
+#include <stdio.h>
+#include <stdlib.h>
 
-options: global program options
-out: pointer to the dynamic output array to which the result is appended. Must
-  be freed after use.
-outsize: pointer to the dynamic output array size.
-*/
-void ZopfliZlibCompress(const ZopfliOptions* options,
-                        const unsigned char* in, size_t insize,
-                        unsigned char** out, size_t* outsize);
-
-#endif  /* ZOPFLI_ZLIB_H_ */
+void ZopfliInitOptions(ZopfliOptions* options) {
+  options->verbose = 0;
+  options->verbose_more = 0;
+  options->numiterations = 15;
+  options->blocksplitting = 1;
+  options->blocksplittinglast = 0;
+  options->blocksplittingmax = 15;
+}
