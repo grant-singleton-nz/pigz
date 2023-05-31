@@ -4,3 +4,6 @@
 [submodule "pthread-win32"]
 	path = pthread-win32
 	url = https://github.com/GerHobbelt/pthread-win32.git
+[submodule "zopfli"]
+	path = zopfli
+	url = https://github.com/google/zopfli.git
