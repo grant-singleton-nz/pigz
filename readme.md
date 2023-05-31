@@ -35,13 +35,7 @@ For Visual Studio 2012:
 ## How the port was made
 
 Pigz uses pthreads for threading. For easy porting, I used [pthread-win32](
-https://github.com/GerHobbelt/pthread-win32). I added the following at the
-top of `pthread.h`:
-
-```
-#define __CLEANUP_C
-#define PTW32_STATIC_LIB
-```
+https://github.com/GerHobbelt/pthread-win32).
 
 I used `dirent.[c|h]` from http://www.two-sdg.demon.co.uk/curbralan/code/dirent/dirent.html.
 

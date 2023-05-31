@@ -27,6 +27,8 @@ project "pigz"
       buildoptions {"/wd4996", "/wd4244", "/wd4305" }
       linkoptions {"/NODEFAULTLIB:\"msvcrt.lib\""}
 
+   defines { "PTW32_STATIC_LIB", "PTW32_CLEANUP_C" }
+
    configuration "Debug"
        defines { "_DEBUG" }
 
@@ -38,6 +40,7 @@ project "unpigz"
    excludes { "zopfli/zopfli_bin.c" }
    includedirs { "win32", "zlib", "pthread-win32" }
    links {  "zlib", "pthread-win32" }
+   defines { "PTW32_STATIC_LIB", "PTW32_CLEANUP_C" }
 
    configuration {"vs*"}
       buildoptions {"/wd4996", "/wd4244", "/wd4305" }
@@ -60,4 +63,5 @@ project "pthread-win32"
       "pthread-win32/*.h",
       "pthread-win32/pthread.c"
    }
+   defines { "__PTHREAD_JUMBO_BUILD__" , "PTW32_STATIC_LIB", "HAVE_CONFIG_H", "PT32_CLEANUP_C"  }
    includedirs { "pthread-win32" }
